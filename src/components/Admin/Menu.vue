@@ -1,0 +1,90 @@
+<template>
+    <div class="menu h-full" :class="{'close': mainStore.menuToggleState}">
+        <ul>
+            <li>
+                <router-link class="menu__link" :to="{name: 'admin'}">
+                    <span class="icon">⌂</span>
+                    <span class="title">Главная</span>
+                </router-link>
+            </li>
+            <li>
+                <router-link class="menu__link" :to="{name: 'adminList'}">
+                    <span class="icon">❆</span>
+                    <span class="title">Список</span>
+                </router-link>
+            </li>
+        </ul>
+        <div @click="mainStore.menuToggleState = !mainStore.menuToggleState" class="menu__toggle">
+            {{ mainStore.menuToggleState ? '>' : '<' }}
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import {adminMainStore} from "@s/admin/main";
+
+const mainStore = adminMainStore();
+</script>
+
+<style scoped lang="scss">
+.menu {
+    width: 240px;
+    border: 1px solid #3a3a3a;
+    position: relative;
+    transition: ease-in-out .3s;
+
+    &.close {
+        width: 50px;
+
+        .menu__link {
+            .title {
+                opacity: 0;
+            }
+        }
+    }
+
+    &__toggle {
+        transition: ease-in-out .3s;
+        cursor: pointer;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        font-size: 24px;
+        line-height: 1;
+        border: 1px solid #000123;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        background-color: white;
+        right: -16px;
+        top: calc(50% - 32px);
+    }
+
+    &__link {
+        padding: 8px 16px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        .icon {
+            display: block;
+            font-size: 24px;
+            line-height: 1;
+            font-weight: bolder;
+        }
+
+        .title {
+            transition: ease-in-out .3s;
+            display: block;
+            line-height: 1;
+            opacity: 1;
+        }
+    }
+
+    ul {
+        li {
+            border-bottom: 1px solid #3a3a3a;
+        }
+    }
+}
+</style>

@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
+import { getStorage } from 'firebase/storage'
 import {FirebaseConfigInterface} from "@i/FirebaseConfigInterface";
 
 const firebaseConfig: FirebaseConfigInterface = {
@@ -16,9 +17,11 @@ const firebaseConfig: FirebaseConfigInterface = {
 const firebaseApp = initializeApp(firebaseConfig)
 const db = getDatabase(firebaseApp)
 const auth = getAuth(firebaseApp)
+const storage = getStorage(firebaseApp)
 
 export {
     firebaseApp,
     db,
     auth,
+    storage,
 }

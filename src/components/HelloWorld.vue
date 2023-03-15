@@ -1,9 +1,4 @@
 <template>
-    <ul>
-        <li v-for="todo in someTodo" :key="todo.id">
-            <span>{{ todo.text }}</span>
-        </li>
-    </ul>
     <pre>{{user}}</pre>
 </template>
 
