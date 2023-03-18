@@ -1,4 +1,11 @@
-import {createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw} from 'vue-router';
+import {
+    createRouter,
+    createWebHashHistory,
+    createWebHistory,
+    NavigationGuardNext,
+    RouteLocationNormalized,
+    RouteRecordRaw
+} from 'vue-router';
 import Home from "@p/Home.vue";
 import Register from "@p/Register.vue";
 import Login from "@p/Login.vue";
@@ -144,7 +151,7 @@ const routes: Array<RouteRecordRaw> = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 });
 
