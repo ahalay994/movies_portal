@@ -5,20 +5,17 @@
 </template>
 
 <script setup lang="ts">
-import {computed, defineAsyncComponent, DefineComponent} from "vue";
-import {useRoute} from "vue-router";
+import {computed, defineAsyncComponent, DefineComponent} from "vue"
+import {useRoute} from "vue-router"
 
-const route = useRoute();
-/**
- *  This is a computed property that will return the name
- *  of the current route
- */
+const route = useRoute()
+
 const layout = computed(() => {
-    const layout = route?.meta?.layout;
+    const layout = route?.meta?.layout
 
     if (layout) {
-        return defineAsyncComponent<DefineComponent>(() => import(`@l/${layout}Layout.vue`) as any);
+        return defineAsyncComponent<DefineComponent>(() => import(`@l/${layout}Layout.vue`) as any)
     }
-    return defineAsyncComponent<DefineComponent>(() => import('@l/DefaultLayout.vue') as any);
+    return defineAsyncComponent<DefineComponent>(() => import('@l/DefaultLayout.vue') as any)
 });
 </script>

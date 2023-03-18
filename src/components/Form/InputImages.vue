@@ -19,7 +19,7 @@
         <div v-if="images || newImages" class="image-upload__list grid grid-cols-4 mt-2 gap-2">
             <div v-if="images" class="image-upload__list_container relative" v-for="(image, key) in images">
                 <suspense>
-                    <image-field :src="image.path" :alt="image.name"/>
+                    <v-image-field :src="image.path" :alt="image.name"/>
                 </suspense>
                 <div class="image-upload__list_wrapper flex justify-end items-end gap-2">
                     <button @click.prevent="remove(key)">Удалить</button>
@@ -36,41 +36,35 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from "vue";
-import ImageField from '@c/Form/ImageField.vue'
+import {defineAsyncComponent, DefineComponent, reactive, ref} from "vue";
+import ImageInterface from "@i/ImageInterface";
 
-interface Image {
-    path: string
-    name: string
-    file?: Blob
-}
+const VImageField = defineAsyncComponent<DefineComponent>(() => import('@c/Form/ImageField.vue') as any);
 
-const {modelValue} = defineProps<{ modelValue: Image[] }>()
+const {modelValue} = defineProps<{ modelValue: ImageInterface[] }>()
 const emits = defineEmits(['update:modelValue'])
-const active = ref(false)
-const images: Image[] = reactive(modelValue);
 
-const newImages: Image[] = reactive([]);
+const active = ref(false)
+const images: ImageInterface[] = reactive(modelValue);
+const newImages: ImageInterface[] = reactive([]);
 
 const onFileChanged = (event: Event) => {
     const target = event.target as HTMLInputElement
     if (target && target.files) {
-        for (const fileIndex in Array.from(target.files)) {
-            const file = target.files[fileIndex]
+        for (const file of Array.from(target.files)) {
             newImages.push({
                 path: URL.createObjectURL(file),
                 name: file.name,
                 file
             });
 
-            updateModel();
+            emits('update:modelValue', [...images, ...newImages]);
         }
     }
 }
 const setActive = () => active.value = true;
 const setInactive = () => active.value = false;
 const remove = (key: number, isNewImage: boolean = false) => (isNewImage ? newImages : images).splice(key, 1);
-const updateModel = () => emits('update:modelValue', [...images, ...newImages]);
 </script>
 
 <style scoped lang="scss">

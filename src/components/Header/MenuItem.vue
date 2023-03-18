@@ -2,19 +2,8 @@
     <router-link :to="{name: href}">{{ title }}</router-link>
 </template>
 
-<script lang="ts">
-export default {
-    props: {
-        href: {
-            type: String,
-            required: true,
-        },
-        title: {
-            type: String,
-            required: true,
-        }
-    }
-}
+<script setup lang="ts">
+const {href, title} = defineProps<{ href: string, title: string }>()
 </script>
 
 <style scoped lang="scss">

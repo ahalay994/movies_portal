@@ -7,12 +7,12 @@ import NotFound from "@p/NotFound.vue";
 
 /** Admin **/
 import Admin from "@p/Admin/index.vue";
-/* List */
-import AdminList from "@p/Admin/List/index.vue";
-import AdminListShow from "@p/Admin/List/Show.vue";
-import AdminListCreate from "@p/Admin/List/Create.vue";
-import AdminListEdit from "@p/Admin/List/Edit.vue";
-import AdminListArchive from "@p/Admin/List/Archive.vue";
+/* Movies */
+import AdminMovies from "@p/Admin/Movies/index.vue";
+import AdminMoviesShow from "@p/Admin/Movies/Show.vue";
+import AdminMoviesCreate from "@p/Admin/Movies/Create.vue";
+import AdminMoviesEdit from "@p/Admin/Movies/Edit.vue";
+import AdminMoviesArchive from "@p/Admin/Movies/Archive.vue";
 
 const guest = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     useAuthStore().user ? next({name: 'home'}) : next();
@@ -95,37 +95,18 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        name: 'adminList',
-        path: '/admin/list',
-        component: AdminList,
+        name: 'adminMovies',
+        path: '/admin/movies',
+        component: AdminMovies,
         beforeEnter: admin,
         meta: {
             layout: 'Admin',
         },
     },
     {
-        name: 'adminListItem',
-        path: '/admin/list/:id',
-        component: AdminListShow,
-        beforeEnter: admin,
-        props: true,
-        meta: {
-            layout: 'Admin',
-        },
-    },
-    {
-        name: 'adminListCreate',
-        path: '/admin/list/create',
-        component: AdminListCreate,
-        beforeEnter: admin,
-        meta: {
-            layout: 'Admin',
-        },
-    },
-    {
-        name: 'adminListEdit',
-        path: '/admin/list/edit/:id',
-        component: AdminListEdit,
+        name: 'adminMoviesItem',
+        path: '/admin/movies/:id',
+        component: AdminMoviesShow,
         beforeEnter: admin,
         props: true,
         meta: {
@@ -133,9 +114,28 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        name: 'adminListArchive',
-        path: '/admin/list/archive',
-        component: AdminListArchive,
+        name: 'adminMoviesCreate',
+        path: '/admin/movies/create',
+        component: AdminMoviesCreate,
+        beforeEnter: admin,
+        meta: {
+            layout: 'Admin',
+        },
+    },
+    {
+        name: 'adminMoviesEdit',
+        path: '/admin/movies/edit/:id',
+        component: AdminMoviesEdit,
+        beforeEnter: admin,
+        props: true,
+        meta: {
+            layout: 'Admin',
+        },
+    },
+    {
+        name: 'adminMoviesArchive',
+        path: '/admin/movies/archive',
+        component: AdminMoviesArchive,
         beforeEnter: admin,
         meta: {
             layout: 'Admin',

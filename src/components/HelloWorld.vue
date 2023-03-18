@@ -3,19 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {useDatabaseList, useDatabaseObject} from 'vuefire'
-import { ref as dbRef } from 'firebase/database'
-import {db} from "@/firebase/config";
+import {useAuthStore} from "@s/useAuth";
 
-const todos = useDatabaseList(dbRef(db, 'todos'))
-const someTodo = useDatabaseObject(dbRef(db, 'todos'))
-
-import { useCurrentUser } from 'vuefire'
-
-const user = useCurrentUser()
-
+const {user} = useAuthStore()
 </script>
-
-<style scoped lang="scss">
-
-</style>

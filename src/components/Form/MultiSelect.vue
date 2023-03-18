@@ -21,23 +21,14 @@
 import Multiselect from '@vueform/multiselect'
 
 const {modelValue, options, required} = withDefaults(defineProps<{
-    modelValue: string,
+    modelValue: string[],
     options: string[],
     required: boolean
 }>(), {
     required: false
 })
-
 const emits = defineEmits(['update:modelValue', 'option'])
 
-/** Добавление новых тегов **/
-const addCustomOptionEvent = (option: string) => {
-    emits('option', option)
-}
-
-const changeEvent = (value: string) => emits('update:modelValue', value);
+const addCustomOptionEvent = (option: string) => emits('option', option)
+const changeEvent = (value: string) => emits('update:modelValue', value)
 </script>
-
-<style scoped>
-
-</style>

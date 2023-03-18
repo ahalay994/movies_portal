@@ -6,12 +6,7 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-    title: string
-    routeName: string
-}
-
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<{title: string, routeName: string}>(), {
     title: import.meta.env.VITE_PROJECT_NAME,
     routeName: 'home'
 })

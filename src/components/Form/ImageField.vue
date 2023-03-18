@@ -3,13 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import {adminMainStore} from "@s/admin/main";
+import {adminMoviesStore} from "@s/admin/movies";
 
-const {src} = defineProps<{ src: string, alt?: string }>()
-const store = adminMainStore()
-const imageSrc = await store.downloadImage(src)
+const {src, alt} = defineProps<{ src: string, alt?: string }>()
+const {getImage} = adminMoviesStore()
+const imageSrc = await getImage(src)
 </script>
-
-<style scoped lang="scss">
-
-</style>

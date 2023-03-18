@@ -1,13 +1,13 @@
 <template>
     <footer class="container">
-        <logo />
+        <v-logo />
     </footer>
 </template>
 
 <script setup lang="ts">
-import {defineAsyncComponent, DefineComponent} from "vue";
+import {defineAsyncComponent, DefineComponent} from "vue"
 
-const Logo = defineAsyncComponent<DefineComponent>(() => import('@c/Logo.vue') as any);
+const VLogo = defineAsyncComponent<DefineComponent>(() => import('@c/Logo.vue') as any)
 </script>
 
 <style scoped lang="scss">

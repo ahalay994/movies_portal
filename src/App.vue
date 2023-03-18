@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import {defineAsyncComponent, DefineComponent} from "vue";
+import {defineAsyncComponent, DefineComponent} from "vue"
 
-const AppLayout = defineAsyncComponent<DefineComponent>(() => import('@/layouts/AppLayout.vue') as any);
+const AppLayout = defineAsyncComponent<DefineComponent>(() => import('@l/AppLayout.vue') as any)
 </script>

@@ -1,7 +1,7 @@
 <template>
-    <admin-header/>
+    <v-admin-header/>
     <div class="flex h-full">
-        <admin-menu />
+        <v-admin-menu />
         <main class="w-full">
             <slot/>
         </main>
@@ -11,10 +11,6 @@
 <script setup lang="ts">
 import {defineAsyncComponent, DefineComponent} from "vue";
 
-const AdminHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Header/index.vue') as any);
-const AdminMenu = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Menu.vue') as any);
+const VAdminHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Header/index.vue') as any);
+const VAdminMenu = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Menu.vue') as any);
 </script>
-
-<style scoped lang="scss">
-
-</style>

@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database'
 import { getAuth } from 'firebase/auth'
 import { getStorage } from 'firebase/storage'
-import {FirebaseConfigInterface} from "@i/FirebaseConfigInterface";
+import {FirebaseConfigInterface} from "@i/fitebase/FirebaseConfigInterface"
 
 const firebaseConfig: FirebaseConfigInterface = {
     apiKey: import.meta.env.VITE_API_KEY,

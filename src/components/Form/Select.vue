@@ -19,5 +19,5 @@ const {modelValue, options, required} = withDefaults(defineProps<{
 })
 
 const emits = defineEmits(['update:modelValue'])
-const changeEvent = (value: string) => emits('update:modelValue', value);
+const changeEvent = (value: string) => emits('update:modelValue', value)
 </script>

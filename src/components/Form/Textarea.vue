@@ -17,7 +17,10 @@ const {modelValue, required} = withDefaults(defineProps<{
 })
 
 const emits = defineEmits(['update:modelValue'])
-const inputEvent = (event: Event) => emits('update:modelValue', event.target?.value)
+const inputEvent = (event: Event) => {
+    const target = event.target as HTMLInputElement
+    emits('update:modelValue', target.value)
+}
 </script>
 
 <style scoped lang="scss">

@@ -1,15 +1,15 @@
-import {defineStore} from "pinia";
+import {defineStore} from "pinia"
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from 'firebase/auth'
 import {updateProfile} from 'firebase/auth'
-import {auth} from "@/firebase/config";
-import router from "@/router";
-import {UseAuthStateInterface} from "@i/stores/UseAuthStateInterface";
+import {auth} from "@/firebase/config"
+import router from "@/router"
+import {UseAuthStateInterface} from "@i/stores/UseAuthStateInterface"
 
 export const useAuthStore = defineStore('useAuth', {
     state: (): UseAuthStateInterface => {
         return {
-            email: 'ahalay994@gmail.com',
-            password: '15966951',
+            email: '',
+            password: '',
             name: '',
             user: null,
         }
@@ -18,14 +18,14 @@ export const useAuthStore = defineStore('useAuth', {
     actions: {
         async signup() {
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+                const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password)
                 await updateProfile(userCredential.user, {
                     displayName: this.name
-                });
-                this.user = userCredential.user;
+                })
+                this.user = userCredential.user
                 await router.push({name: 'home'})
             } catch (e) {
-                console.error(e)
+                alert(e)
             }
         },
         async login() {
@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('useAuth', {
                 await signInWithEmailAndPassword(auth, this.email, this.password)
                 await router.push({name: 'home'})
             } catch (e) {
-                console.error(e);
+                alert(e);
             }
         },
         async logout() {
@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('useAuth', {
             this.email = ''
             this.password = ''
             this.name = ''
-        }
+        },
     },
 })
 

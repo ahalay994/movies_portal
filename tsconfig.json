@@ -1,5 +1,16 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "rootDir": ".",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "types": [
+      "node"
+    ],
+
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -20,8 +31,12 @@
       "@p/*": ["./src/pages/*"],
       "@r/*": ["./src/router/*"],
       "@s/*": ["./src/stores/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "exclude": [
+    "node_modules",
+  ]
 }

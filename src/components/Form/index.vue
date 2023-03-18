@@ -1,7 +1,6 @@
 <template>
     <form class="flex flex-col w-full gap-4" @submit.prevent="emits('submit')">
         <slot/>
-
         <input type="submit" value="Сохранить">
     </form>
 </template>

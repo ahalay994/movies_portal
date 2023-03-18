@@ -1,5 +1,5 @@
 <template>
-    <div class="menu h-full" :class="{'close': mainStore.menuToggleState}">
+    <div class="menu h-full" :class="{'close': menuToggleState}">
         <ul>
             <li>
                 <router-link class="menu__link" :to="{name: 'admin'}">
@@ -8,22 +8,22 @@
                 </router-link>
             </li>
             <li>
-                <router-link class="menu__link" :to="{name: 'adminList'}">
+                <router-link class="menu__link" :to="{name: 'adminMovies'}">
                     <span class="icon">❆</span>
                     <span class="title">Список</span>
                 </router-link>
             </li>
         </ul>
-        <div @click="mainStore.menuToggleState = !mainStore.menuToggleState" class="menu__toggle">
-            {{ mainStore.menuToggleState ? '>' : '<' }}
+        <div @click="menuToggleState = !menuToggleState" class="menu__toggle">
+            {{ menuToggleState ? '>' : '<' }}
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {adminMainStore} from "@s/admin/main";
+import {adminMoviesStore} from "@s/admin/movies";
 
-const mainStore = adminMainStore();
+const {menuToggleState} = adminMoviesStore();
 </script>
 
 <style scoped lang="scss">
