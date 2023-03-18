@@ -1,1 +1,0 @@
-import{_ as o,K as r,o as n,i as _,j as s,s as a,t as c}from"./index-7a221224.js";const i={props:{href:{type:String,required:!0},title:{type:String,required:!0}}};function d(u,p,e,l,f,m){const t=r("router-link");return n(),_(t,{to:{name:e.href}},{default:s(()=>[a(c(e.title),1)]),_:1},8,["to"])}const y=o(i,[["render",d],["__scopeId","data-v-e8d7d4e5"]]);export{y as default};
