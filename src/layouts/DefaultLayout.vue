@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import {defineAsyncComponent, DefineComponent} from "vue";
 
-const MainHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Header/index.vue') as any);
+const MainHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Header/Index.vue') as any);
 const MainFooter = defineAsyncComponent<DefineComponent>(() => import('@c/Footer/index.vue') as any);
 </script>
 

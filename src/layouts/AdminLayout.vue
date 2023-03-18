@@ -11,6 +11,6 @@
 <script setup lang="ts">
 import {defineAsyncComponent, DefineComponent} from "vue";
 
-const VAdminHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Header/index.vue') as any);
+const VAdminHeader = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Header/Index.vue') as any);
 const VAdminMenu = defineAsyncComponent<DefineComponent>(() => import('@c/Admin/Menu.vue') as any);
 </script>
