@@ -1,9 +1,9 @@
 <template>
-    <pre>{{user}}</pre>
+	<pre>{{ user }}</pre>
 </template>
 
-<script setup lang="ts">
-import {useAuthStore} from "@s/useAuth";
+<script setup lang='ts'>
+import { useAuthStore } from '@s/useAuth'
 
-const {user} = useAuthStore()
+const { user } = useAuthStore()
 </script>

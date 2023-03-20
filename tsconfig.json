@@ -10,7 +10,6 @@
     "types": [
       "node"
     ],
-
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -20,23 +19,50 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@c/*": ["./src/components/*"],
-      "@i/*": ["./src/interfaces/*"],
-      "@l/*": ["./src/layouts/*"],
-      "@p/*": ["./src/pages/*"],
-      "@r/*": ["./src/router/*"],
-      "@s/*": ["./src/stores/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@c/*": [
+        "./src/components/*"
+      ],
+      "@i/*": [
+        "./src/interfaces/*"
+      ],
+      "@l/*": [
+        "./src/layouts/*"
+      ],
+      "@p/*": [
+        "./src/pages/*"
+      ],
+      "@r/*": [
+        "./src/router/*"
+      ],
+      "@s/*": [
+        "./src/stores/*"
+      ]
     },
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
   "exclude": [
-    "node_modules",
+    "node_modules"
   ]
 }
