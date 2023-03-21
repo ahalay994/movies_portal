@@ -27,11 +27,9 @@
 </template>
 
 <script setup lang='ts'>
-import { defineAsyncComponent, DefineComponent, reactive, UnwrapNestedRefs } from 'vue'
+import { defineAsyncComponent, DefineComponent, reactive } from 'vue'
 import ImageInterface from '@i/ImageInterface'
-import { MovieFormInterface } from '@i/form/MovieFormInterface'
 import { adminMoviesStore } from '@s/admin/movies'
-import MultiSelectInterface from '@i/MultiSelectInterface'
 import { storeToRefs } from 'pinia'
 
 const VForm = defineAsyncComponent<DefineComponent>(() => import('@c/Form/index.vue') as any)
