@@ -5,17 +5,21 @@
 		</div>
 		<div class='table__content' v-for='({ id, images, name, type, tags }, key) in movies'>
 			<div class='table__content_item'>{{ key + 1 }}</div>
-			<div class='table__content_item'>
-				<image-field v-for='image in images' :src='image' :alt='name' />
+			<div class='table__content_item flex flex-col gap-3'>
+				<suspense v-for='image in images'>
+					<image-field :src='image' :alt='name' />
+				</suspense>
 			</div>
 			<div class='table__content_item'>{{ name }}</div>
-			<div class='table__content_item'>{{ type }}</div>
+			<div class='table__content_item'>{{ getTypeMovieName(type) }}</div>
 			<div class='table__content_item'>
 				<div class='tag' v-for='tag in tags'>{{ tag }}</div>
 			</div>
-			<div class='table__content_item'>
-				<router-link :to="{ name: 'adminMoviesEdit', params: { id } }">Изменить</router-link>
-				<button @click='deleteMovieEvent(id)'>Удалить</button>
+			<div class='table__content_item flex flex-wrap flex-col items-center gap-2'>
+				<router-link class='w-full text-center' :to="{ name: 'adminMoviesShow', params: { id } }">Подробнее</router-link>
+				<router-link class='w-full text-center' :to="{ name: 'adminMoviesEdit', params: { id } }">Изменить</router-link>
+				<button class='w-full text-center' v-if='isArchive' @click='restoreMovieEvent(id)'>Восстановить</button>
+				<button class='w-full text-center' v-else @click='deleteMovieEvent(id)'>Удалить</button>
 			</div>
 		</div>
 	</div>
@@ -25,19 +29,31 @@
 import { adminMoviesStore } from '@s/admin/movies'
 import ImageField from '@c/Form/ImageField.vue'
 import { storeToRefs } from 'pinia'
+import MultiSelectInterface from '@i/MultiSelectInterface'
+
+const {isArchive} = withDefaults(defineProps<{isArchive: boolean}>(), {
+	isArchive: false
+})
 
 const header = ['#', 'Изображение', 'Название', 'Тип', 'Теги', '']
-const { getMovies, deleteMovie } = adminMoviesStore()
-const { movies } = storeToRefs(adminMoviesStore())
+const { getMovies, deleteMovie, restoreMovie, getTypesMovies } = adminMoviesStore()
+const { movies, typesMovies } = storeToRefs(adminMoviesStore())
 
-getMovies()
-const deleteMovieEvent = (id: string) => deleteMovie(id)
+getTypesMovies()
+getMovies(isArchive)
+
+const getTypeMovieName = (slug: string) => typesMovies.value?.filter((type: MultiSelectInterface) => type.value === slug)[0]?.label
+const deleteMovieEvent = async (id: string) => await deleteMovie(id)
+const restoreMovieEvent = async (id: string) => {
+	await restoreMovie(id)
+	getMovies(isArchive)
+}
 </script>
 
 <style scoped lang='scss'>
 .table {
 	display: grid;
-	grid-template-columns: 50px 160px 1fr 80px 1fr 100px;
+	grid-template-columns: 50px 160px 1fr 80px 1fr 150px;
 	grid-template-rows: auto;
 	border: 1px solid #000123;
 

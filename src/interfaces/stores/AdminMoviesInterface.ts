@@ -1,5 +1,8 @@
+import { MovieDbInterface } from '@i/fitebase/MoviesDbInterface'
+
 export interface AdminMoviesStateInterface {
 	movies: [] | any[] | any
+	movie: MovieDbInterface | any[] | any
 	typesMovies: [] | any[] | any
 	lastSnapshots: any | null
 	searchString: string

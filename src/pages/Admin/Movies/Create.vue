@@ -1,5 +1,6 @@
 <template>
 	<div class='px-4 py-2'>
+		<a @click.prevent='$router.go(-1)' class='inline-block border px-4 py-2 mb-4 bg-blue-400 hover:bg-blue-700 transition-all cursor-pointer'>&lt; Назад</a>
 		<h1 class='mb-4 text-3xl font-bold'>Добавить</h1>
 
 		<suspense>
@@ -35,10 +36,10 @@ const save = async (formFields: MovieFormInterface) => {
 		tags: formFields.tags,
 		description: formFields.description,
 		user: user?.displayName || user?.email,
-		userUpdate: '',
+		userUpdate: '-',
 		createdAt: new Date().toLocaleString('ru-RU'),
-		updatedAt: '',
-		deletedAt: '',
+		updatedAt: '-',
+		deletedAt: '-',
 	})
 		.catch((error: Error) => console.error(error))
 		.finally(() => router.push({ name: 'adminMovies' }))

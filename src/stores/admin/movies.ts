@@ -32,6 +32,7 @@ export const adminMoviesStore = defineStore('adminMovies', {
 	state: () =>
 		({
 			movies: [],
+			movie: {},
 			typesMovies: [],
 			lastSnapshots: null,
 			searchString: '',
@@ -69,7 +70,7 @@ export const adminMoviesStore = defineStore('adminMovies', {
 		},
 
 		getMovies(isArchive: boolean = false) {
-			const conditions: QueryConstraint[] = [where('deletedAt', isArchive ? '!=' : '==', '')]
+			const conditions: QueryConstraint[] = [where('deletedAt', isArchive ? '!=' : '==', '-')]
 
 			/** Поиск **/
 			if (this.searchString) {
@@ -98,10 +99,15 @@ export const adminMoviesStore = defineStore('adminMovies', {
 		},
 
 		getMovie: async (id: string) => (await getDoc(doc(db, 'movies', id))).data(),
+		getMovieShow(id: string) {
+			onSnapshot(doc(db, "movies", id), (doc) => {
+				this.movie = doc.data()
+			});
+		},
 		updateMovie: async (data: object, id: string) => await updateDoc(doc(db, 'movies', id), data),
 		saveMovie: async (data: MovieDbInterface) => await addDoc(collection(db, 'movies'), data),
 		deleteMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: new Date().toLocaleString('RU-ru') }),
-		restoreMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: '' }),
+		restoreMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: '-' }),
 
 		getImage: async (urlImage: string) => await getDownloadURL(storageRef(storage, urlImage)),
 		saveImage: async (image: Blob) => (await uploadBytes(storageRef(storage, image.name), image)).metadata.fullPath,
