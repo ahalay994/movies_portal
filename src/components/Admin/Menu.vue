@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang='ts'>
-import { adminMoviesStore } from '@s/admin/movies'
+import { ref } from 'vue'
 
-const { menuToggleState } = adminMoviesStore()
+const menuToggleState = ref(false)
 </script>
 
 <style scoped lang='scss'>

@@ -17,7 +17,8 @@ import {
 	limit,
 	orderBy,
 	startAfter,
-	getCountFromServer
+	getCountFromServer,
+	onSnapshot,
 } from 'firebase/firestore'
 import { AdminMoviesStateInterface } from '@i/stores/AdminMoviesInterface'
 import {
@@ -30,7 +31,8 @@ import { QueryConstraint, QueryDocumentSnapshot } from '@firebase/firestore'
 export const adminMoviesStore = defineStore('adminMovies', {
 	state: () =>
 		({
-			menuToggleState: false,
+			movies: [],
+			typesMovies: [],
 			lastSnapshots: null,
 			searchString: '',
 			count: 0,
@@ -53,13 +55,21 @@ export const adminMoviesStore = defineStore('adminMovies', {
 		getTags: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
 
 		createTypesMovies: async (typeMovie: TypeMovieInterface) => await addDoc(collection(db, 'typesVideo'), typeMovie),
-		getTypesMovies: async () => (await getDocs(collection(db, 'typesVideo'))).docs.map((doc: QueryDocumentSnapshot) => ({
-			value: doc.data().slug,
-			label: doc.data().name
-		})),
+		getTypesMovies() {
+			onSnapshot(collection(db, "typesVideo"), (querySnapshot) => {
+				const typesMovies: any = [];
+				querySnapshot.forEach((doc) => {
+					typesMovies.push({
+						value: doc.data().slug,
+						label: doc.data().name,
+					});
+				});
+				this.typesMovies = typesMovies;
+			});
+		},
 
-		async getMovies() {
-			const conditions: QueryConstraint[] = [where('deletedAt', '==', false)]
+		getMovies(isArchive: boolean = false) {
+			const conditions: QueryConstraint[] = [where('deletedAt', isArchive ? '!=' : '==', '')]
 
 			/** Поиск **/
 			if (this.searchString) {
@@ -76,18 +86,22 @@ export const adminMoviesStore = defineStore('adminMovies', {
 			/** Лимит **/
 			conditions.push(limit(this.limit))
 
-			const dbQuery = query(collection(db, 'movies'), ...conditions)
-			const documentSnapshots = await getDocs(dbQuery)
+			const q = query(collection(db, 'movies'), ...conditions)
 
-			// this.lastSnapshots = documentSnapshots.docs[documentSnapshots.docs.length - 1]
-			this.currentCount += this.limit
-			return documentSnapshots.docs.map((doc: QueryDocumentSnapshot) => ({ id: doc.id, ...doc.data() }))
+			onSnapshot(q, (querySnapshot) => {
+				const movies: any = []
+				querySnapshot.forEach((doc) => {
+					movies.push({ id: doc.id, ...doc.data() })
+				})
+				this.movies = movies
+			})
 		},
+
 		getMovie: async (id: string) => (await getDoc(doc(db, 'movies', id))).data(),
 		updateMovie: async (data: object, id: string) => await updateDoc(doc(db, 'movies', id), data),
 		saveMovie: async (data: MovieDbInterface) => await addDoc(collection(db, 'movies'), data),
-		deleteMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deleteAt: new Date().toLocaleString('RU-ru') }),
-		restoreMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deleteAt: null }),
+		deleteMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: new Date().toLocaleString('RU-ru') }),
+		restoreMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: '' }),
 
 		getImage: async (urlImage: string) => await getDownloadURL(storageRef(storage, urlImage)),
 		saveImage: async (image: Blob) => (await uploadBytes(storageRef(storage, image.name), image)).metadata.fullPath,

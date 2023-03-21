@@ -28,18 +28,6 @@ const save = async (formFields: MovieFormInterface) => {
 		}
 	}
 
-	console.log({
-		name: formFields.name,
-		images: imageUrls,
-		type: formFields.type,
-		tags: formFields.tags,
-		description: formFields.description,
-		user: user?.displayName || user?.email,
-		userUpdate: null,
-		createdAt: new Date().toLocaleString('ru-RU'),
-		updatedAt: null,
-		deletedAt: null,
-	});
 	await saveMovie({
 		name: formFields.name,
 		images: imageUrls,
@@ -47,10 +35,10 @@ const save = async (formFields: MovieFormInterface) => {
 		tags: formFields.tags,
 		description: formFields.description,
 		user: user?.displayName || user?.email,
-		userUpdate: false,
+		userUpdate: '',
 		createdAt: new Date().toLocaleString('ru-RU'),
-		updatedAt: false,
-		deletedAt: false,
+		updatedAt: '',
+		deletedAt: '',
 	})
 		.catch((error: Error) => console.error(error))
 		.finally(() => router.push({ name: 'adminMovies' }))

@@ -9,7 +9,7 @@
 		</v-field-wrapper>
 
 		<v-field-wrapper label='Тип'>
-			<v-select v-model='formFields.type' :options='typesMoviesList' />
+			<v-select v-model='formFields.type' :options='typesMovies' />
 		</v-field-wrapper>
 
 		<v-field-wrapper label='Теги'>
@@ -27,11 +27,12 @@
 </template>
 
 <script setup lang='ts'>
-import { defineAsyncComponent, DefineComponent, reactive } from 'vue'
+import { defineAsyncComponent, DefineComponent, reactive, UnwrapNestedRefs } from 'vue'
 import ImageInterface from '@i/ImageInterface'
 import { MovieFormInterface } from '@i/form/MovieFormInterface'
 import { adminMoviesStore } from '@s/admin/movies'
 import MultiSelectInterface from '@i/MultiSelectInterface'
+import { storeToRefs } from 'pinia'
 
 const VForm = defineAsyncComponent<DefineComponent>(() => import('@c/Form/index.vue') as any)
 const VFieldWrapper = defineAsyncComponent<DefineComponent>(() => import('@c/Form/FieldWrapper.vue') as any)
@@ -42,13 +43,14 @@ const VTextarea = defineAsyncComponent<DefineComponent>(() => import('@c/Form/Te
 const InputText = defineAsyncComponent<DefineComponent>(() => import('@c/Form/InputText.vue') as any)
 
 const { getTags, getTypesMovies, getMovie, createTag } = adminMoviesStore()
+const { typesMovies } = storeToRefs(adminMoviesStore())
 const { id } = defineProps<{ id: string }>()
 const emits = defineEmits(['save'])
 
 const tagsList: string[] = await getTags()
-const typesMoviesList: MultiSelectInterface[] = await getTypesMovies()
+getTypesMovies()
 
-let formFields: MovieFormInterface = reactive({
+let formFields: any = reactive({
 	name: '',
 	description: '',
 	type: '',

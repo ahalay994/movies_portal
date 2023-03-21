@@ -15,7 +15,7 @@
 			</div>
 			<div class='table__content_item'>
 				<router-link :to="{ name: 'adminMoviesEdit', params: { id } }">Изменить</router-link>
-				<button>Удалить</button>
+				<button @click='deleteMovieEvent(id)'>Удалить</button>
 			</div>
 		</div>
 	</div>
@@ -24,11 +24,14 @@
 <script setup lang='ts'>
 import { adminMoviesStore } from '@s/admin/movies'
 import ImageField from '@c/Form/ImageField.vue'
-import { reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const header = ['#', 'Изображение', 'Название', 'Тип', 'Теги', '']
-const { getMovies } = adminMoviesStore()
-const movies: any = reactive(await getMovies())
+const { getMovies, deleteMovie } = adminMoviesStore()
+const { movies } = storeToRefs(adminMoviesStore())
+
+getMovies()
+const deleteMovieEvent = (id: string) => deleteMovie(id)
 </script>
 
 <style scoped lang='scss'>

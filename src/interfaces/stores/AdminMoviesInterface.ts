@@ -1,5 +1,6 @@
 export interface AdminMoviesStateInterface {
-	menuToggleState: boolean
+	movies: [] | any[] | any
+	typesMovies: [] | any[] | any
 	lastSnapshots: any | null
 	searchString: string
 	limit: number
