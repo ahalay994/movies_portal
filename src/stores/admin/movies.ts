@@ -19,6 +19,7 @@ import {
 	startAfter,
 	getCountFromServer,
 	onSnapshot,
+	deleteDoc,
 } from 'firebase/firestore'
 import { AdminMoviesStateInterface } from '@i/stores/AdminMoviesInterface'
 import {
@@ -56,11 +57,13 @@ export const adminMoviesStore = defineStore('adminMovies', {
 		getTags: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
 
 		createTypesMovies: async (typeMovie: TypeMovieInterface) => await addDoc(collection(db, 'typesVideo'), typeMovie),
+		updateTypesMovies: async (data: object, id: string) => await updateDoc(doc(db, 'typesVideo', id), data),
 		getTypesMovies() {
 			onSnapshot(collection(db, "typesVideo"), (querySnapshot) => {
 				const typesMovies: any = [];
 				querySnapshot.forEach((doc) => {
 					typesMovies.push({
+						id: doc.id,
 						value: doc.data().slug,
 						label: doc.data().name,
 					});
@@ -68,6 +71,7 @@ export const adminMoviesStore = defineStore('adminMovies', {
 				this.typesMovies = typesMovies;
 			});
 		},
+		deleteTypesMovies: async(id: string) => await deleteDoc(doc(db, "typesVideo", id)),
 
 		getMovies(isArchive: boolean = false) {
 			const conditions: QueryConstraint[] = [where('deletedAt', isArchive ? '!=' : '==', '-')]
@@ -97,7 +101,6 @@ export const adminMoviesStore = defineStore('adminMovies', {
 				this.movies = movies
 			})
 		},
-
 		getMovie: async (id: string) => (await getDoc(doc(db, 'movies', id))).data(),
 		getMovieShow(id: string) {
 			onSnapshot(doc(db, "movies", id), (doc) => {

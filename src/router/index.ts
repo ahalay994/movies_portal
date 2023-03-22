@@ -20,6 +20,8 @@ import AdminMoviesShow from '@p/Admin/Movies/Show.vue'
 import AdminMoviesCreate from '@p/Admin/Movies/Create.vue'
 import AdminMoviesEdit from '@p/Admin/Movies/Edit.vue'
 import AdminMoviesArchive from '@p/Admin/Movies/Archive.vue'
+/* TypesMovies */
+import AdminTypesMovies from '@p/Admin/TypesMovies/index.vue'
 
 const guest = (
 	to: RouteLocationNormalized,
@@ -109,6 +111,8 @@ const routes: Array<RouteRecordRaw> = [
 			layout: 'Admin',
 		},
 	},
+
+	/*** AdminMovies ***/
 	{
 		name: 'adminMovies',
 		path: '/admin/movies',
@@ -119,7 +123,7 @@ const routes: Array<RouteRecordRaw> = [
 		},
 	},
 	{
-		name: 'adminMoviesItem',
+		name: 'adminMoviesShow',
 		path: '/admin/movies/:id',
 		component: AdminMoviesShow,
 		beforeEnter: admin,
@@ -151,6 +155,17 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'adminMoviesArchive',
 		path: '/admin/movies/archive',
 		component: AdminMoviesArchive,
+		beforeEnter: admin,
+		meta: {
+			layout: 'Admin',
+		},
+	},
+
+	/*** AdminTypesMovies ***/
+	{
+		name: 'adminTypesMovies',
+		path: '/admin/types-movies',
+		component: AdminTypesMovies,
 		beforeEnter: admin,
 		meta: {
 			layout: 'Admin',
