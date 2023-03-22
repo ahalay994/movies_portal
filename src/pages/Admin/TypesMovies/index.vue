@@ -36,14 +36,14 @@ import { adminMoviesStore } from '@s/admin/movies'
 import { storeToRefs } from 'pinia'
 import MultiSelectInterface from '@i/MultiSelectInterface'
 import { reactive } from 'vue'
-import { TypeMovieInterface } from '@i/fitebase/MoviesDbInterface'
+import { TypeVideoInterface } from '@i/fitebase/MoviesDbInterface'
 
 const { getTypesMovies, deleteTypesMovies, createTypesMovies, updateTypesMovies } = adminMoviesStore()
 const { typesMovies } = storeToRefs(adminMoviesStore())
 
 getTypesMovies()
 
-const data: TypeMovieInterface = reactive({
+const data: TypeVideoInterface = reactive({
 	id: null,
 	name: '',
 	slug: ''
@@ -55,7 +55,7 @@ const clearEvent = () => {
 	data.slug = ''
 }
 const submitEvent = async () => {
-	const type: TypeMovieInterface = data;
+	const type: TypeVideoInterface = data;
 	if (type.id) {
 		await updateTypesMovies({
 			name: type.name,

@@ -15,7 +15,7 @@ export interface TagDbInterface {
 	name: string
 }
 
-export interface TypeMovieInterface {
+export interface TypeVideoInterface {
 	id?: string | null | undefined
 	name: string
 	slug: string

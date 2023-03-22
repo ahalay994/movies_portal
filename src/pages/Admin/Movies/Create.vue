@@ -18,7 +18,7 @@ import { MovieFormInterface } from '@i/form/MovieFormInterface'
 
 const AdminMoviesForm = defineAsyncComponent<DefineComponent>(() => import('@p/Admin/Movies/_components/Form.vue') as any)
 
-const { saveImage, saveMovie } = adminMoviesStore()
+const { saveImage, createMovie } = adminMoviesStore()
 const { user } = useAuthStore()
 
 const save = async (formFields: MovieFormInterface) => {
@@ -29,7 +29,7 @@ const save = async (formFields: MovieFormInterface) => {
 		}
 	}
 
-	await saveMovie({
+	await createMovie({
 		name: formFields.name,
 		images: imageUrls,
 		type: formFields.type,

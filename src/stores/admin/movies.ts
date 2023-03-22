@@ -10,22 +10,22 @@ import {
 	getDocs,
 	doc,
 	getDoc,
-	addDoc,
 	updateDoc,
 	where,
 	query,
 	limit,
-	orderBy,
 	startAfter,
 	getCountFromServer,
 	onSnapshot,
 	deleteDoc,
+	increment,
+	setDoc,
 } from 'firebase/firestore'
 import { AdminMoviesStateInterface } from '@i/stores/AdminMoviesInterface'
 import {
 	MovieDbInterface,
 	TagDbInterface,
-	TypeMovieInterface,
+	TypeVideoInterface,
 } from '@i/fitebase/MoviesDbInterface'
 import { QueryConstraint, QueryDocumentSnapshot } from '@firebase/firestore'
 
@@ -53,26 +53,46 @@ export const adminMoviesStore = defineStore('adminMovies', {
 		},
 	},
 	actions: {
-		createTag: async (tag: TagDbInterface) => await addDoc(collection(db, 'tags'), tag),
-		getTags: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
+		incField: async (typeData: string) => await setDoc(doc(db, '--stats--', 'counterFields'), { [typeData]: increment(1) }, { merge: true }),
 
-		createTypesMovies: async (typeMovie: TypeMovieInterface) => await addDoc(collection(db, 'typesVideo'), typeMovie),
-		updateTypesMovies: async (data: object, id: string) => await updateDoc(doc(db, 'typesVideo', id), data),
+		getTags: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
+		async createTag(tag: TagDbInterface) {
+			await getDoc(doc(db, '--stats--', 'counterFields')).then(async (el: any) => {
+				const counterFields = el.data()
+				await setDoc(doc(db, 'tags', (counterFields['tags'] || 1).toString()), tag)
+				await this.incField('tags')
+			})
+		},
+
 		getTypesMovies() {
-			onSnapshot(collection(db, "typesVideo"), (querySnapshot) => {
-				const typesMovies: any = [];
+			onSnapshot(collection(db, 'typesVideo'), (querySnapshot) => {
+				const typesMovies: any = []
 				querySnapshot.forEach((doc) => {
 					typesMovies.push({
 						id: doc.id,
 						value: doc.data().slug,
 						label: doc.data().name,
-					});
-				});
-				this.typesMovies = typesMovies;
-			});
+					})
+				})
+				this.typesMovies = typesMovies
+			})
 		},
-		deleteTypesMovies: async(id: string) => await deleteDoc(doc(db, "typesVideo", id)),
+		async createTypesMovies(typeVideo: TypeVideoInterface) {
+			await getDoc(doc(db, '--stats--', 'counterFields')).then(async (el: any) => {
+				const counterFields = el.data()
+				await setDoc(doc(db, 'typesVideo', (counterFields['typesVideo'] || 1).toString()), typeVideo)
+				await this.incField('typesVideo')
+			})
+		},
+		updateTypesMovies: async (data: object, id: string) => await updateDoc(doc(db, 'typesVideo', id), data),
+		deleteTypesMovies: async (id: string) => await deleteDoc(doc(db, 'typesVideo', id)),
 
+		getMovie: async (id: string) => (await getDoc(doc(db, 'movies', id))).data(),
+		getMovieShow(id: string) {
+			onSnapshot(doc(db, 'movies', id), (doc) => {
+				this.movie = doc.data()
+			})
+		},
 		getMovies(isArchive: boolean = false) {
 			const conditions: QueryConstraint[] = [where('deletedAt', isArchive ? '!=' : '==', '-')]
 
@@ -101,14 +121,14 @@ export const adminMoviesStore = defineStore('adminMovies', {
 				this.movies = movies
 			})
 		},
-		getMovie: async (id: string) => (await getDoc(doc(db, 'movies', id))).data(),
-		getMovieShow(id: string) {
-			onSnapshot(doc(db, "movies", id), (doc) => {
-				this.movie = doc.data()
-			});
+		async createMovie(movie: MovieDbInterface) {
+			await getDoc(doc(db, '--stats--', 'counterFields')).then(async (el: any) => {
+				const counterFields = el.data()
+				await setDoc(doc(db, 'movies', (counterFields['movies'] || 1).toString()), movie)
+				await this.incField('movies')
+			})
 		},
 		updateMovie: async (data: object, id: string) => await updateDoc(doc(db, 'movies', id), data),
-		saveMovie: async (data: MovieDbInterface) => await addDoc(collection(db, 'movies'), data),
 		deleteMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: new Date().toLocaleString('RU-ru') }),
 		restoreMovie: async (id: string) => await updateDoc(doc(db, 'movies', id), { deletedAt: '-' }),
 
