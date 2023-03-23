@@ -19,6 +19,12 @@
 					<span class='title'>Тип фильма</span>
 				</router-link>
 			</li>
+			<li>
+				<router-link class='menu__link' :to="{ name: 'adminTags' }">
+					<span class='icon'>§</span>
+					<span class='title'>Теги</span>
+				</router-link>
+			</li>
 		</ul>
 		<div class='menu__toggle' @click='menuToggleState = !menuToggleState'>
 			{{ menuToggleState ? '>' : '<' }}

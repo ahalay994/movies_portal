@@ -1,4 +1,6 @@
 <template>
+	<h1 class='mb-4'>Типы видео</h1>
+
 	<form @submit.prevent='submitEvent' class='mb-4 flex gap-5'>
 		<div>
 			<label for='name'>Название</label>

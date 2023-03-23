@@ -22,6 +22,8 @@ import AdminMoviesEdit from '@p/Admin/Movies/Edit.vue'
 import AdminMoviesArchive from '@p/Admin/Movies/Archive.vue'
 /* TypesMovies */
 import AdminTypesMovies from '@p/Admin/TypesMovies/index.vue'
+/* Tags */
+import AdminTags from '@p/Admin/Tags/index.vue'
 
 const guest = (
 	to: RouteLocationNormalized,
@@ -166,6 +168,17 @@ const routes: Array<RouteRecordRaw> = [
 		name: 'adminTypesMovies',
 		path: '/admin/types-movies',
 		component: AdminTypesMovies,
+		beforeEnter: admin,
+		meta: {
+			layout: 'Admin',
+		},
+	},
+
+	/*** AdminTags ***/
+	{
+		name: 'adminTags',
+		path: '/admin/tags',
+		component: AdminTags,
 		beforeEnter: admin,
 		meta: {
 			layout: 'Admin',

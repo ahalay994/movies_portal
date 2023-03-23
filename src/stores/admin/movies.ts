@@ -35,11 +35,12 @@ export const adminMoviesStore = defineStore('adminMovies', {
 			movies: [],
 			movie: {},
 			typesMovies: [],
+			tags: [],
 			lastSnapshots: null,
 			searchString: '',
 			count: 0,
 			currentCount: 0,
-			limit: 10,
+			limit: 10
 		} as AdminMoviesStateInterface),
 	getters: {
 		async getCount(): Promise<number> {
@@ -55,7 +56,20 @@ export const adminMoviesStore = defineStore('adminMovies', {
 	actions: {
 		incField: async (typeData: string) => await setDoc(doc(db, '--stats--', 'counterFields'), { [typeData]: increment(1) }, { merge: true }),
 
-		getTags: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
+		getTags() {
+			onSnapshot(collection(db, 'tags'), (querySnapshot) => {
+				const tags: any = []
+				querySnapshot.forEach((doc) => {
+					tags.push({
+						id: doc.id,
+						value: doc.data().name,
+						label: doc.data().name,
+					})
+				})
+				this.tags = tags
+			})
+		},
+		getTagsList: async () => (await getDocs(collection(db, 'tags'))).docs.map((doc: QueryDocumentSnapshot) => doc.data().name),
 		async createTag(tag: TagDbInterface) {
 			await getDoc(doc(db, '--stats--', 'counterFields')).then(async (el: any) => {
 				const counterFields = el.data()
@@ -63,6 +77,7 @@ export const adminMoviesStore = defineStore('adminMovies', {
 				await this.incField('tags')
 			})
 		},
+		deleteTags: async (id: string) => await deleteDoc(doc(db, 'tags', id)),
 
 		getTypesMovies() {
 			onSnapshot(collection(db, 'typesVideo'), (querySnapshot) => {

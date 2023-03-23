@@ -40,12 +40,12 @@ const VMultiSelect = defineAsyncComponent<DefineComponent>(() => import('@c/Form
 const VTextarea = defineAsyncComponent<DefineComponent>(() => import('@c/Form/Textarea.vue') as any)
 const InputText = defineAsyncComponent<DefineComponent>(() => import('@c/Form/InputText.vue') as any)
 
-const { getTags, getTypesMovies, getMovie, createTag, movie } = adminMoviesStore()
+const { getTagsList, getTypesMovies, getMovie, createTag, movie } = adminMoviesStore()
 const { typesMovies } = storeToRefs(adminMoviesStore())
 const { id } = defineProps<{ id: string }>()
 const emits = defineEmits(['save'])
 
-const tagsList: string[] = await getTags()
+const tagsList: string[] = await getTagsList()
 getTypesMovies()
 
 let formFields: any = reactive({
