@@ -14,7 +14,7 @@
 			</div>
 		</div>
 
-		<movies-table />
+		<movies-table :is-archive='false' />
 	</div>
 </template>
 

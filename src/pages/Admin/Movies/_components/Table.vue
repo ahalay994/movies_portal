@@ -30,10 +30,9 @@ import { adminMoviesStore } from '@s/admin/movies'
 import ImageField from '@c/Form/ImageField.vue'
 import { storeToRefs } from 'pinia'
 import MultiSelectInterface from '@i/MultiSelectInterface'
+import { onUnmounted } from 'vue'
 
-const {isArchive} = withDefaults(defineProps<{isArchive: boolean}>(), {
-	isArchive: false
-})
+const {isArchive} = defineProps<{isArchive: boolean}>()
 
 const header = ['#', 'Изображение', 'Название', 'Тип', 'Теги', '']
 const { getMovies, deleteMovie, restoreMovie, getTypesMovies } = adminMoviesStore()
@@ -48,6 +47,10 @@ const restoreMovieEvent = async (id: string) => {
 	await restoreMovie(id)
 	getMovies(isArchive)
 }
+
+onUnmounted(() => {
+	movies.value = [];
+})
 </script>
 
 <style scoped lang='scss'>
