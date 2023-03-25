@@ -1,17 +1,19 @@
 <template>
-	<h1 class='mb-4'>Теги</h1>
+	<div>
+		<h1 class='mb-4'>Теги</h1>
 
-	<div class='table w-full'>
-		<div class='table__header'>
-			<div>id</div>
-			<div>Название</div>
-			<div></div>
-		</div>
-		<div class='table__content py-4' v-for='(tag, key) in tags'>
-			<div>{{ key + 1 }}</div>
-			<div>{{ tag.label }}</div>
-			<div class='flex flex-col'>
-				<button @click='deleteEvent(tag.id)'>Удалить</button>
+		<div class='table w-full'>
+			<div class='table__header'>
+				<div>id</div>
+				<div>Название</div>
+				<div></div>
+			</div>
+			<div class='table__content py-4' v-for='(tag, key) in tags'>
+				<div>{{ key + 1 }}</div>
+				<div>{{ tag.label }}</div>
+				<div class='flex flex-col'>
+					<button @click='deleteEvent(tag.id)'>Удалить</button>
+				</div>
 			</div>
 		</div>
 	</div>

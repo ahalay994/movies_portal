@@ -1,33 +1,35 @@
 <template>
-	<h1 class='mb-4'>Типы видео</h1>
+	<div>
+		<h1 class='mb-4'>Типы видео</h1>
 
-	<form @submit.prevent='submitEvent' class='mb-4 flex gap-5'>
-		<div>
-			<label for='name'>Название</label>
-			<input id='name' type='text' class='border' v-model='data.name'>
-		</div>
-		<div>
-			<label for='slug'>Машинное имя</label>
-			<input id='slug' type='text' class='border' v-model='data.slug' :disabled='data.id'>
-		</div>
-		<input type='submit' value='Сохранить' class='cursor-pointer border px-2 bg-blue-400'>
-		<input @click.prevent='clearEvent' type='button' value='Очистить' class='cursor-pointer border px-2 bg-red-400'>
-	</form>
+		<form @submit.prevent='submitEvent' class='mb-4 flex gap-5'>
+			<div>
+				<label for='name'>Название</label>
+				<input id='name' type='text' class='border' v-model='data.name'>
+			</div>
+			<div>
+				<label for='slug'>Машинное имя</label>
+				<input id='slug' type='text' class='border' v-model='data.slug' :disabled='data.id'>
+			</div>
+			<input type='submit' value='Сохранить' class='cursor-pointer border px-2 bg-blue-400'>
+			<input @click.prevent='clearEvent' type='button' value='Очистить' class='cursor-pointer border px-2 bg-red-400'>
+		</form>
 
-	<div class='table w-full'>
-		<div class='table__header'>
-			<div>id</div>
-			<div>Название</div>
-			<div>Машинное имя</div>
-			<div></div>
-		</div>
-		<div class='table__content py-4' v-for='(type, key) in typesMovies'>
-			<div>{{ key + 1 }}</div>
-			<div>{{ type.label }}</div>
-			<div>{{ type.value }}</div>
-			<div class='flex flex-col'>
-				<button @click='editEvent(type)'>Изменить</button>
-				<button @click='deleteEvent(type.id)'>Удалить</button>
+		<div class='table w-full'>
+			<div class='table__header'>
+				<div>id</div>
+				<div>Название</div>
+				<div>Машинное имя</div>
+				<div></div>
+			</div>
+			<div class='table__content py-4' v-for='(type, key) in typesMovies'>
+				<div>{{ key + 1 }}</div>
+				<div>{{ type.label }}</div>
+				<div>{{ type.value }}</div>
+				<div class='flex flex-col'>
+					<button @click='editEvent(type)'>Изменить</button>
+					<button @click='deleteEvent(type.id)'>Удалить</button>
+				</div>
 			</div>
 		</div>
 	</div>

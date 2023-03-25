@@ -1,10 +1,12 @@
 <template>
-	<v-admin-header />
-	<div class='flex h-full'>
-		<v-admin-menu />
-		<main class='w-full'>
-			<slot />
-		</main>
+	<div>
+		<v-admin-header />
+		<div class='flex h-full'>
+			<v-admin-menu />
+			<main class='w-full'>
+				<slot />
+			</main>
+		</div>
 	</div>
 </template>
 
